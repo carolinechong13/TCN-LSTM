@@ -1,0 +1,27 @@
+def create_TCN_with_attention(hidden_units, dense_units, input_shape, activation):
+    x=Input(shape=input_shape)
+    RNN_layer = SimpleRNN(hidden_units, return_sequences=True, activation=activation)(x)
+    attention_layer = attention()(RNN_layer)
+    outputs=Dense(dense_units, trainable=True, activation=activation)(attention_layer)
+    model=Model(x,outputs)
+    model.compile(loss='mse', optimizer='adam')    
+    return model 
+
+# TCN
+model = keras.Sequential()
+model.add(layers.Conv1D(200, 3, activation='relu',input_shape=x_train.shape[1:]))
+model.resize = CausalResize(2)
+model.add(Dropout(0.25))
+model.add(layers.Conv1D(100, 3, activation="relu" ))
+model.add(Dropout(0.25))
+model.add(layers.MaxPooling1D(pool_size=(1)))
+model.add(Dropout(0.25))
+
+# LSTM
+model.add(layers.LSTM(100, return_sequences=True, input_shape=(x_train.shape[1:], 1)))
+model.add(layers.LSTM(100, return_sequences=False))
+model.add(layers.Dense(25))
+model.add(layers.Dense(1))
+
+model.add(model_attention)
+model.summary()
