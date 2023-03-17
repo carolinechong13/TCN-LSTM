@@ -1,0 +1,7 @@
+model.compile(optimizer='adam', loss='mean_squared_error')
+model.fit(x_train, y_train, batch_size= 256, epochs=2)
+
+predictions = model.predict(x_test)
+predictions = scaler.inverse_transform(predictions)
+rmse = np.sqrt(np.mean(predictions - y_test)**2)
+rmse
